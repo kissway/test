@@ -2,17 +2,8 @@ git push says "everything up-to-date" even though I have local changes
 https://stackoverflow.com/questions/999907/git-push-says-everything-up-to-date-even-though-i-have-local-changes
 
 
+While git push says "everything up-to-date", you still can technically push a detached HEAD, as noted in the comments by Jonathan Benn
 
-    Earlier versions of git did not allow this and asked you to create a temporary branch using the -b option, but starting from version 1.5.0, the above command detaches your HEAD from the current branch and directly points at the commit named by the tag (v2.6.18 in the example above).
+ >> git push origin HEAD:main
 
-    You can use all git commands while in this state.
-    You can use git reset --hard $othercommit to further move around, for example.
-    You can make changes and create a new commit on top of a detached HEAD.
-    You can even create a merge by using git merge $othercommit.
-
-    The state you are in while your HEAD is detached is not recorded by any branch (which is natural --- you are not on any branch).
-    What this means is that you can discard your temporary commits and merges by switching back to an existing branch (e.g. git checkout master), and a later git prune or git gc would garbage-collect them.
-    If you did this by mistake, you can ask the reflog for HEAD where you were, e.g.
-
-    $ git log -g -2 HEAD
-
+You have to specify the destination branch, since the source is not a branch, and does not have an upstream target branch.
